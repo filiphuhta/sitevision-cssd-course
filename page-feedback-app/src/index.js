@@ -11,6 +11,7 @@ import permissionUtil from '@sitevision/api/server/PermissionUtil';
 import perm from '@sitevision/api/server/PermissionUtil.Permission.DEVELOPER';
 import storage from '@sitevision/api/server/storage';
 import logUtil from '@sitevision/api/server/LogUtil';
+import propertyUtil from '@sitevision/api/server/PropertyUtil';
 const dataStore = storage.getCollectionDataStore("feedbackStore");
 
 const currentUser = portletContextUtil.getCurrentUser();
@@ -42,23 +43,22 @@ router.get('/', (req, res) => {
 
 router.post('/addFeedback', (req, res) => {
   logUtil.info(JSON.stringify(req));
-  let message = {
-    "message": req.params.feedback
-   // "user": req.data.currentUser
+  let feedback = {
+    "message": req.params.feedback,
+    "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName")
   };
-  
 
   try {
-    const result2 = dataStore.add(message);
+    const result2 = dataStore.add(feedback);
     logUtil.info(JSON.stringify(result2));
 
   } catch (e) {
     logUtil.info(e.message);
-    // Error handling
   }
 
   res.json({
     message: "Du har nu lämnat feedback, tack för din slösade tid. :)"
   });
+  
 });
 

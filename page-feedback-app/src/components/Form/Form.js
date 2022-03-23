@@ -9,13 +9,10 @@ const Form = () => {
     const [feedback, setFeedback] = React.useState("");
 
     const handleFeedbackChange = (e) => {
-        console.log(e.target.value);
         setFeedback(e.target.value);
-        console.log("Aktuell feedback: " + feedback);
     };
 
     const addFeedback = () => {
-        console.log(feedback);
         requester.doPost({
             url: router.getStandaloneUrl("/addFeedback"),
             data: {
