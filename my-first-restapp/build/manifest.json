@@ -1,0 +1,13 @@
+{
+  "id": "my-first-restapp",
+  "version": "0.0.1",
+  "name": "My first restapp",
+  "author": "Filip AB",
+  "description": "A RESTApp",
+  "helpUrl": "https://developer.sitevision.se/restapps",
+  "type": "RESTApp",
+  "bundled": true,
+  "storage": {
+    "collectionDataStore": "messages"
+ }
+}

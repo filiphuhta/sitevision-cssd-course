@@ -1,0 +1,6 @@
+{
+  "hello": "Hej {0}, välkommen till {1}!",
+  "settings": "Inställningar",
+  "page": "Sida",
+  "propertyNoExist": "Ingen egenskap med namnet {0} existerar"
+}

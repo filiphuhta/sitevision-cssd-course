@@ -1,0 +1,13 @@
+.container {
+  background-color: #80c5ff;
+  padding: 2rem;
+  border: 1px solid var(--env-block-border-color);
+}
+
+.label {
+  display: block;
+  text-align: center;
+  color: white;
+  padding: 1rem;
+  font-size: 24px;
+}
