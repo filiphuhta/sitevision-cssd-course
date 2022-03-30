@@ -4,6 +4,10 @@
   border-bottom: 2px dashed var(--env-block-border-color);
 }
 
+.container:last-child {
+  border: none;
+}
+
 .textColor {
   color: white;
 }
