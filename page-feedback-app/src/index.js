@@ -12,6 +12,7 @@ import perm from '@sitevision/api/server/PermissionUtil.Permission.DEVELOPER';
 import storage from '@sitevision/api/server/storage';
 import logUtil from '@sitevision/api/server/LogUtil';
 import propertyUtil from '@sitevision/api/server/PropertyUtil';
+import dateUtil from '@sitevision/api/server/DateUtil';
 const dataStore = storage.getCollectionDataStore("feedbackStore");
 
 const currentUser = portletContextUtil.getCurrentUser();
@@ -34,10 +35,24 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
   let isInEditor = versionUtil.getCurrentVersion() != versionUtil.ONLINE_VERSION ? true : false;
   let isAdmin = userHasPermission ? true : false;
+  let feedback = [];
 
-  res.agnosticRender(renderToString(<App isInEditor={isInEditor} isAdmin={isAdmin} />), {
+  let storedFeedback = dataStore.find('*').toArray();
+  storedFeedback.forEach(feedbackItem => {
+    logUtil.info(feedbackItem.dstimestamp);
+    feedback.push({
+      name: feedbackItem.user,
+      message: feedbackItem.message,
+      date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
+      page: feedbackItem.feedbackPage
+    })
+  });
+  logUtil.info(JSON.stringify(feedback));
+
+  res.agnosticRender(renderToString(<App isInEditor={isInEditor} isAdmin={isAdmin} feedback={feedback} />), {
     isInEditor,
-    isAdmin
+    isAdmin,
+    feedback
   });
 });
 
@@ -45,7 +60,8 @@ router.post('/addFeedback', (req, res) => {
   logUtil.info(JSON.stringify(req));
   let feedback = {
     "message": req.params.feedback,
-    "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName")
+    "feedbackPage": propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName"),
+    "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName"),
   };
 
   try {
@@ -59,6 +75,6 @@ router.post('/addFeedback', (req, res) => {
   res.json({
     message: "Du har nu lämnat feedback, tack för din slösade tid. :)"
   });
-  
+
 });
 

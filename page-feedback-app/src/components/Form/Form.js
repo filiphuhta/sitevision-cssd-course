@@ -21,12 +21,8 @@ const Form = () => {
         }).then((response) => {
             toasts.publish({
                 message: response.message,
-                type: 'primary',
-                callback: () => {
-                    console.log(response.message + "succcessfully collected!");
-                }
+                type: 'primary'
             })
-
         }).catch((response) => {
             alert(response.responseJSON.errorMsg);
         });

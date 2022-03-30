@@ -4,8 +4,8 @@ import styles from './App.scss';
 import Form from '../Form/Form';
 import Feedback from '../Feedback/Feedback';
 
-const App = ({ isInEditor, isAdmin }) => {
-
+const App = ({ isInEditor, isAdmin, feedback }) => {
+  console.log(feedback);
 
   return (
     <div className={styles.container}>
@@ -16,7 +16,9 @@ const App = ({ isInEditor, isAdmin }) => {
         :
         <Form />
       }
-      {isAdmin && <Feedback></Feedback>}
+      {isAdmin && feedback.map((f) =>
+        <Feedback key={f.dsid} feedback={f}></Feedback>
+      )}
     </div>
   );
 };
@@ -24,6 +26,7 @@ const App = ({ isInEditor, isAdmin }) => {
 App.propTypes = {
   isInEditor: PropTypes.bool,
   isAdmin: PropTypes.bool,
+  feedback: PropTypes.array
 };
 
 export default App;
