@@ -16,6 +16,11 @@ const App = ({ isInEditor, isAdmin, feedback }) => {
         :
         <Form />
       }
+
+      {isAdmin && feedback && feedback.length > 0 &&
+        <h3 className={styles.feedbackHeader}>Feedback lämnad på sidan</h3>
+      }
+      
       {isAdmin && feedback.map((f) =>
         <Feedback key={f.dsid} feedback={f}></Feedback>
       )}

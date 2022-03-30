@@ -36,18 +36,18 @@ router.get('/', (req, res) => {
   let isInEditor = versionUtil.getCurrentVersion() != versionUtil.ONLINE_VERSION ? true : false;
   let isAdmin = userHasPermission ? true : false;
   let feedback = [];
-
   let storedFeedback = dataStore.find('*').toArray();
+
   storedFeedback.forEach(feedbackItem => {
-    logUtil.info(feedbackItem.dstimestamp);
-    feedback.push({
-      name: feedbackItem.user,
-      message: feedbackItem.message,
-      date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
-      page: feedbackItem.feedbackPage
-    })
+    if (feedbackItem.feedbackPage === propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName")) {
+      feedback.push({
+        name: feedbackItem.user,
+        message: feedbackItem.message,
+        date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
+        page: feedbackItem.feedbackPage
+      })
+    }
   });
-  logUtil.info(JSON.stringify(feedback));
 
   res.agnosticRender(renderToString(<App isInEditor={isInEditor} isAdmin={isAdmin} feedback={feedback} />), {
     isInEditor,

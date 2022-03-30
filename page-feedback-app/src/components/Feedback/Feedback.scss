@@ -1,7 +1,7 @@
 .container {
   background-color: #004a90;
   padding: 2rem;
-  border: 1px solid var(--env-block-border-color);
+  border-bottom: 2px dashed var(--env-block-border-color);
 }
 
 .textColor {
