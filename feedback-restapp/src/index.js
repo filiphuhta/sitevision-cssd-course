@@ -6,6 +6,7 @@ import mailBuilder from '@sitevision/api/server/MailBuilder';
 import resourceLocatorUtil from '@sitevision/api/server/ResourceLocatorUtil';
 import logUtil from '@sitevision/api/server/LogUtil';
 import * as dataStoreProvider from './utils/dataStoreProvider';
+import { sendMail } from './utils/mailHelper';
 
 router.get('/getFeedback', (req, res) => {
   let feedback = dataStoreProvider.getPrevSearches();
@@ -13,21 +14,20 @@ router.get('/getFeedback', (req, res) => {
 });
 
 router.post('/addFeedback', (req, res) => {
-  logUtil.info(JSON.stringify(res));
-  let feedback = dataStoreProvider.add(res.value);
-  res.status(200).json({ data: feedback });
+  logUtil.info("testing: " + JSON.stringify(req));
+  let feedback = dataStoreProvider.add((req.params.value));
+  if (feedback) {
+  //  sendMail("Page " + res.value.feedbackPage + "has new feedback", "Feedback added to page " + res.value.feedbackPage + ": " + res.value.message);
+    res.status(200).json({ data: feedback });
+  }
 });
 
 events.on("sv:publishing:publish", (options) => {
-  const page = resourceLocatorUtil.getNodeByIdentifier(options.node);
-
-  logUtil.info(JSON.stringify(options));
-  const mail = mailBuilder.setSubject(page + "was published")
-    .setTextMessage(options.emitter + "published" + page)
-    .addRecipient("filip.huhta@consid.se")
-    .build();
-
-  mail.send();
+  /**  const page = resourceLocatorUtil.getNodeByIdentifier(options.node);
+ 
+   logUtil.info(JSON.stringify(options));
+ 
+   */
 });
 
 router.put('/myroute', (req, res) => {

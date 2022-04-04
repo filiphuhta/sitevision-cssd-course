@@ -9,12 +9,10 @@ import portletContextUtil from '@sitevision/api/server/PortletContextUtil';
 import roleUtil from '@sitevision/api/server/RoleUtil';
 import permissionUtil from '@sitevision/api/server/PermissionUtil';
 import perm from '@sitevision/api/server/PermissionUtil.Permission.DEVELOPER';
-import storage from '@sitevision/api/server/storage';
 import logUtil from '@sitevision/api/server/LogUtil';
 import propertyUtil from '@sitevision/api/server/PropertyUtil';
 import dateUtil from '@sitevision/api/server/DateUtil';
 import * as requestHelper from './utils/requestHelper';
-const dataStore = storage.getCollectionDataStore("feedbackStore");
 
 const currentUser = portletContextUtil.getCurrentUser();
 const currentPage = portletContextUtil.getCurrentPage();
@@ -41,9 +39,7 @@ router.get('/', (req, res) => {
     url: '/getFeedback'
   };
 
-  logUtil.info(JSON.stringify(options));
   let storedFeedback = requestHelper.getData(options);
-  logUtil.info("Stored feedback: " + storedFeedback);
 
   storedFeedback.forEach(feedbackItem => {
     if (feedbackItem.feedbackPage === propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName")) {
