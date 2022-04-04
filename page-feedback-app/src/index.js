@@ -13,6 +13,7 @@ import storage from '@sitevision/api/server/storage';
 import logUtil from '@sitevision/api/server/LogUtil';
 import propertyUtil from '@sitevision/api/server/PropertyUtil';
 import dateUtil from '@sitevision/api/server/DateUtil';
+import * as requestHelper from './utils/requestHelper';
 const dataStore = storage.getCollectionDataStore("feedbackStore");
 
 const currentUser = portletContextUtil.getCurrentUser();
@@ -36,7 +37,13 @@ router.get('/', (req, res) => {
   let isInEditor = versionUtil.getCurrentVersion() != versionUtil.ONLINE_VERSION ? true : false;
   let isAdmin = userHasPermission ? true : false;
   let feedback = [];
-  let storedFeedback = dataStore.find('*').toArray();
+  let options = {
+    url: '/getFeedback'
+  };
+
+  logUtil.info(JSON.stringify(options));
+  let storedFeedback = requestHelper.getData(options);
+  logUtil.info("Stored feedback: " + storedFeedback);
 
   storedFeedback.forEach(feedbackItem => {
     if (feedbackItem.feedbackPage === propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName")) {
@@ -57,24 +64,32 @@ router.get('/', (req, res) => {
 });
 
 router.post('/addFeedback', (req, res) => {
+
   logUtil.info(JSON.stringify(req));
-  let feedback = {
-    "message": req.params.feedback,
-    "feedbackPage": propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName"),
-    "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName"),
+  let options = {
+    url: '/addFeedback' ,
+    value: {
+      "message": req.params.feedback,
+      "feedbackPage": propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName"),
+      "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName"),
+    }
   };
 
-  try {
-    const result2 = dataStore.add(feedback);
-    logUtil.info(JSON.stringify(result2));
+  let addedFeedback = requestHelper.addData(options);
 
-  } catch (e) {
-    logUtil.info(e.message);
+  /** 
+    try {
+      const result2 = dataStore.add(feedback);
+      logUtil.info(JSON.stringify(result2));
+  
+    } catch (e) {
+      logUtil.info(e.message);
+    }
+  */
+  if (addedFeedback) {
+    res.json({
+      message: "Du har nu lämnat feedback, tack för din slösade tid. :)"
+    });
   }
-
-  res.json({
-    message: "Du har nu lämnat feedback, tack för din slösade tid. :)"
-  });
-
 });
 
