@@ -73,6 +73,7 @@ router.post('/addFeedback', (req, res) => {
 
   let addedFeedback = requestHelper.addData(options);
 
+  logUtil.info("testing tstin: " + addedFeedback);
   /** 
     try {
       const result2 = dataStore.add(feedback);
