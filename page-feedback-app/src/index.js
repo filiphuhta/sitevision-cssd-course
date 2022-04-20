@@ -67,6 +67,7 @@ router.post('/addFeedback', (req, res) => {
     value: {
       "message": req.params.feedback,
       "feedbackPage": propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName"),
+      "feedbackPageURL": propertyUtil.getString(portletContextUtil.getCurrentPage(), "URL"),
       "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName"),
     }
   };

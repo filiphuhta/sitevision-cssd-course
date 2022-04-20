@@ -1,12 +1,12 @@
 import storage from '@sitevision/api/server/storage';
 import logUtil from '@sitevision/api/server/LogUtil';
-const propertyStore = storage.getCollectionDataStore("feedbackStore");
+const feedbackStore = storage.getCollectionDataStore("feedbackStore");
 
 export const add = (data) => {
     let result;
     try {
-        result = propertyStore.add(data);
-        propertyStore.instantIndex(result.dsid);
+        result = feedbackStore.add(data);
+        feedbackStore.instantIndex(result.dsid);
     } catch (err) {
         logUtil.info("Could not write to DataStore");
     }
@@ -14,5 +14,5 @@ export const add = (data) => {
 }
 
 export const getPrevSearches = () => {
-    return propertyStore.find('*').toArray();
+    return feedbackStore.find('*').toArray();
 }
