@@ -22,7 +22,17 @@ let feedbackHTMLMessage = (feedbackObject) => {
 
 let makeFeedbackOutdated = (page) => {
   let feedback = dataStoreProvider.getPrevSearches();
-  
+  logUtil.info("Sidorna från början:" + JSON.stringify(feedback));
+  feedback.forEach(f => {
+    if (f.feedbackPage == page) {
+      logUtil.info("En träff på sidan: " + JSON.stringify(f));
+      if (!f.isOutdated) {
+        f.isOutdated = true;
+        dataStoreProvider.update(f.dsid, f);
+      }
+    }
+  })
+
 }
 
 // hämtar feedback
@@ -52,7 +62,8 @@ events.on('sv:publishing:publish', (options) => {
   const page = resourceLocatorUtil.getNodeByIdentifier(options.node);
   // if(options.body.)
   logUtil.info("Testar events: " + JSON.stringify(options));
-  logUtil.info(page);
+  logUtil.info(propertyUtil.getString(page, "displayName"));
+  makeFeedbackOutdated(propertyUtil.getString(page, "displayName"));
 });
 
 router.put('/myroute', (req, res) => {

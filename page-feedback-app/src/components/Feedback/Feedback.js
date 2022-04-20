@@ -5,7 +5,10 @@ import styles from './Feedback.scss';
 const Feedback = ({ feedback }) => {
     return (
         <div className={styles.container}>
-            <article className="env-comment env-media">
+            <article className={"env-comment env-media " + feedback.isOutdated ? styles.outdated : ""}>
+                {feedback.isOutdated && 
+                <p className={"env-text " + styles.message} > * Denna feedback är utdaterad * </p>
+                }
                 <div className="env-media__body">
                     <p className={"env-text " + styles.message}>
                         {feedback.message}

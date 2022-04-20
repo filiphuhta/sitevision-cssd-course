@@ -47,7 +47,8 @@ router.get('/', (req, res) => {
         name: feedbackItem.user,
         message: feedbackItem.message,
         date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
-        page: feedbackItem.feedbackPage
+        page: feedbackItem.feedbackPage,
+        isOutdated: feedbackItem.isOutdated
       })
     }
   });
@@ -69,6 +70,7 @@ router.post('/addFeedback', (req, res) => {
       "feedbackPage": propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName"),
       "feedbackPageURL": propertyUtil.getString(portletContextUtil.getCurrentPage(), "URL"),
       "user": propertyUtil.getString(portletContextUtil.getCurrentUser(), "displayName"),
+      "isOutdated": false,
     }
   };
 

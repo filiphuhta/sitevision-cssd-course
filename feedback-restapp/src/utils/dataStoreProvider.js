@@ -16,3 +16,13 @@ export const add = (data) => {
 export const getPrevSearches = () => {
     return feedbackStore.find('*').toArray();
 }
+
+export const update = (dsid, data) => {
+    let result;
+    try {
+        result = feedbackStore.set(dsid, data);
+    } catch (e) {
+        logUtil.info("Could not write to DataStore");
+    }
+    return result;
+}
