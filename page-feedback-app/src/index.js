@@ -85,22 +85,23 @@ router.post('/addFeedback', (req, res) => {
 
 let feedbackHTMLMessage = (feedbackObject) => {
   return '<div style=" background-color: #80c5ff; height:100%; margin: 10px; border-radius: 5px; padding: 20px;">' +
-    '<h2 style="text-align: center; font-size:30px; color: white;"> Meddelande från Filips CSSD sida </h2>' +
+    '<h2 style="text-align: center; font-size:30px; color: white;">' + i18n.get('emailMessageFrom') + ' </h2>' +
     '<div style="color: white; text-align: center; font-size:14px; height: 200px; background-color:#004a90; padding: 20px; border: 1px solid white;">' +
-    '<p style="color: white;">' + 'Sidan med namnet: ' + feedbackObject.feedbackPage + ' har fått feedback. </p>' +
-    '<p style="color: white;">Publicerad feedback: "' + feedbackObject.message + '"</p> ' +
-    '<a style="color: white;" href="' + feedbackObject.feedbackPageURL + '" >Läs mer på Filips Sitevision sida -> </a>' +
+    '<p style="color: white;">' + i18n.get('emailHeading', feedbackObject.feedbackPage) + '</p>' +
+    '<p style="color: white;">' + i18n.get('emailMessage', feedbackObject.message) + '</p> ' +
+    '<a style="color: white;" href="' + feedbackObject.feedbackPageURL + '" >' + i18n.get('emailLink') + '</p> </a>' +
     '</div>' +
     '</div>';
 };
 
 let sendMail = (feedback) => {
   if (feedback) {
-    const mail = mailBuilder.setSubject("Sidan " + feedback.feedbackPage + " har fått feedback.")
+    const mail = mailBuilder.setSubject(i18n.get('emailSubject', feedback.feedbackPage))
       .setHtmlMessage(feedbackHTMLMessage(feedback))
       .addRecipient(appData.get('email'))
       .build();
     mail.send();
   }
 }
+
 

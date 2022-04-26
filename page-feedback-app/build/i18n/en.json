@@ -8,5 +8,10 @@
   "sendFeedback": "Leave feedback about the page",
   "sendFeedbackPlaceHolder": "Hi I would just like to comment about..",
   "sendFeedbackButton": "Send feedback",
-  "adminEmail": "Email to admin to get updates"
+  "adminEmail": "Email to admin to get updates",
+  "emailSubject": "The page {0} has received feedback",
+  "emailMessageFrom": "Message from Philip's CSSD Page",
+  "emailHeading": "The page with the name: {0} has received feedback.",
+  "emailMessage": "Published Feedback: {0}",
+  "emailLink": "Read more on Filip's Sitevision page ->"
 }
