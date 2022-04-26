@@ -5,6 +5,8 @@
   "editorMode": "You are in edit mode you can only leave feedback in view mode.",
   "recivedFeedback": "Feedback provided about the page",
   "outDatedFeedback": "This feedback is outdated",
+  "feedbackRecivedBy": "The feedback is received by: ",
+  "feedbackPageDate": "Date: ",
   "sendFeedback": "Leave feedback about the page",
   "sendFeedbackPlaceHolder": "Hi I would just like to comment about..",
   "sendFeedbackButton": "Send feedback",

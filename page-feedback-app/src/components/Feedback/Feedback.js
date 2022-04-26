@@ -18,12 +18,10 @@ const Feedback = ({ feedback }) => {
                         <ul className="env-list env-list--horizontal env-list-dividers--left">
                             <li className={"env-list__item  " + styles.textColor}>
                                 <small>
-                                    <b>Feedback lämnad av:</b> {feedback.name}
-                                    <br />
-                                    <b>Sida:</b> {feedback.page}
+                                    <b>{i18n.get('feedbackRecivedBy')}</b>{feedback.name}
                                     <br />
                                     <time>
-                                        <b>Datum:</b> {feedback.date}
+                                        <b>{i18n.get('feedbackPageDate')}</b>{feedback.date}
                                     </time>
                                 </small>
                             </li>

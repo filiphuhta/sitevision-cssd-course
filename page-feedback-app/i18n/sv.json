@@ -5,6 +5,8 @@
   "editorMode": "Du är i redigeringsläge du kan enbart lämna feedback i visningsläget.",
   "recivedFeedback": "Feedback lämnad om sidan",
   "outDatedFeedback": "Denna feedback är utdaterad",
+  "feedbackRecivedBy": "Feedback lämnad av: ",
+  "feedbackPageDate": "Datum: ",
   "sendFeedbackHeading": "Lämna feedback om sidan",
   "sendFeedbackPlaceHolder": "Hej jag skulle bara vilja tycka till om..",
   "sendFeedbackButton": "Skicka feedback",
@@ -13,5 +15,5 @@
   "emailMessageFrom": "Meddelande från Filips CSSD sida",
   "emailHeading": "Sidan med namnet: {0} har fått feedback.",
   "emailMessage": "Publicerad feedback: {0}",
-  "emailLink": "Läs mer på Filips Sitevision sida ->" 
+  "emailLink": "Läs mer på Filips Sitevision sida ->"
 }
