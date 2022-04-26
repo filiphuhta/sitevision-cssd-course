@@ -1,9 +1,9 @@
 {
   "id": "feedback-restapp",
   "version": "0.0.1",
-  "name": "RESTApp boilerplate",
-  "author": "Sitevision AB",
-  "description": "A RESTApp boilerplate",
+  "name": "Feedback restapp",
+  "author": "Filip AB",
+  "description": "A feedback restapp",
   "helpUrl": "https://developer.sitevision.se/restapps",
   "type": "RESTApp",
   "bundled": true,
