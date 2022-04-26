@@ -5,7 +5,6 @@ const restApp = restAppInvokerFactory.fromPath('/rest-api/feedback-restapp');
 export const getData = (options) => {
    let data;
    let result = restApp.get(options.url);
-   logUtil.info(JSON.stringify(result));
    if (result.statusCode === 200) {
       data = result.body.data;
    } else {
@@ -16,7 +15,7 @@ export const getData = (options) => {
 
 export const addData = (options) => {
    let data;
-   let result = restApp.post(options.url, { value: options.value });
+   let result = restApp.post(options.url, { value: options });
    if (result.statusCode === 200) {
       data = result.body.data;
    } else {

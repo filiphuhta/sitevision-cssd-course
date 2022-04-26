@@ -7,5 +7,6 @@
   "outDatedFeedback": "Denna feedback är utdaterad",
   "sendFeedbackHeading": "Lämna feedback om sidan",
   "sendFeedbackPlaceHolder": "Hej jag skulle bara vilja tycka till om..",
-  "sendFeedbackButton": "Skicka feedback"
+  "sendFeedbackButton": "Skicka feedback",
+  "adminEmail": "Email till admin som ska få uppdateringar"
 }

@@ -7,5 +7,6 @@
   "outDatedFeedback": "This feedback is outdated",
   "sendFeedback": "Leave feedback about the page",
   "sendFeedbackPlaceHolder": "Hi I would just like to comment about..",
-  "sendFeedbackButton": "Send feedback"
+  "sendFeedbackButton": "Send feedback",
+  "adminEmail": "Email to admin to get updates"
 }
