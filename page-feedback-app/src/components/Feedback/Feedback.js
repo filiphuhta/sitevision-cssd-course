@@ -1,15 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Feedback.scss';
+import i18n from '@sitevision/api/common/i18n';
 
 const Feedback = ({ feedback }) => {
     return (
         <div className={styles.container}>
-            <article className={"env-comment env-media " + feedback.isOutdated ? styles.outdated : ""}>
-                {feedback.isOutdated && 
-                <p className={"env-text " + styles.message} > * Denna feedback är utdaterad * </p>
-                }
+            <article className={"env-comment env-media " + (feedback.isOutdated && styles.outdated)}>
                 <div className="env-media__body">
+                    {feedback.isOutdated &&
+                        <p className={"env-text " + styles.message} > * {i18n.get('outDatedFeedback')} * </p>
+                    }
                     <p className={"env-text " + styles.message}>
                         {feedback.message}
                     </p>

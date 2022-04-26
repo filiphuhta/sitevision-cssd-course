@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import styles from './App.scss';
 import Form from '../Form/Form';
 import Feedback from '../Feedback/Feedback';
+import i18n from '@sitevision/api/common/i18n';
 
 const App = ({ isInEditor, isAdmin, feedback }) => {
-  console.log(feedback);
 
   return (
     <div className={styles.container}>
       {isInEditor ?
         <p className={styles.editorText}>
-          Du är i redigeringsläge du kan enbart lämna feedback i visningsläget.
+          {i18n.get('editorMode')}
         </p>
         :
         <Form />
       }
 
       {isAdmin && feedback && feedback.length > 0 &&
-        <h3 className={styles.feedbackHeader}>Feedback lämnad om sidan</h3>
+        <h3 className={styles.feedbackHeader}>
+          {i18n.get('recivedFeedback')}
+        </h3>
       }
 
       {isAdmin && feedback.map((f) =>

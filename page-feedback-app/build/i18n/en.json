@@ -1,5 +1,11 @@
 {
-  "hello": "Hello",
   "settings": "Settings",
-  "name": "Name"
+  "feedbackToast": "You have now provided feedback, thanks for the feedback provided.",
+  "signedOut": "You have been signed out",
+  "editorMode": "You are in edit mode you can only leave feedback in view mode.",
+  "recivedFeedback": "Feedback provided about the page",
+  "outDatedFeedback": "This feedback is outdated",
+  "sendFeedback": "Leave feedback about the page",
+  "sendFeedbackPlaceHolder": "Hi I would just like to comment about..",
+  "sendFeedbackButton": "Send feedback"
 }

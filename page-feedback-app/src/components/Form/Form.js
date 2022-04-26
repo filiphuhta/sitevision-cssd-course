@@ -4,6 +4,7 @@ import styles from './Form.scss';
 import router from '@sitevision/api/common/router';
 import toasts from '@sitevision/api/client/toasts';
 import requester from '@sitevision/api/client/requester';
+import i18n from '@sitevision/api/common/i18n';
 
 const Form = () => {
     const [feedback, setFeedback] = React.useState("");
@@ -30,13 +31,13 @@ const Form = () => {
 
     return (
         <div className={styles.container}>
-            <label htmlFor="text-1" className={styles.label + " env-form-element__label"} >Lämna feedback om sidan</label>
+            <label htmlFor="text-1" className={styles.label + " env-form-element__label"} >{i18n.get('sendFeedbackHeading')}</label>
             <div className="env-form-element__control">
                 <textarea
                     type="text"
                     name="feedback"
                     className="env-form-input"
-                    placeholder="Hej jag skulle bara vilja tycka till om.."
+                    placeholder={i18n.get('sendFeedbackPlaceHolder')}
                     id="text-1"
                     rows="4"
                     onChange={e => handleFeedbackChange(e)}
@@ -48,7 +49,7 @@ const Form = () => {
                     className="env-button env-button--primary env-button--block"
                     onClick={addFeedback}
                 >
-                    Skicka feedback
+                    {i18n.get('sendFeedbackButton')}
                 </button>
             </p>
         </div>

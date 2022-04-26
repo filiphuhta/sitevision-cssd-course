@@ -13,6 +13,7 @@ import logUtil from '@sitevision/api/server/LogUtil';
 import propertyUtil from '@sitevision/api/server/PropertyUtil';
 import dateUtil from '@sitevision/api/server/DateUtil';
 import * as requestHelper from './utils/requestHelper';
+import i18n from '@sitevision/api/common/i18n';
 
 const currentUser = portletContextUtil.getCurrentUser();
 const currentPage = portletContextUtil.getCurrentPage();
@@ -21,7 +22,7 @@ const userHasPermission = permissionUtil.hasPermission(currentPage, currentUser,
 router.use((req, res, next) => {
   if (systemUserUtil.isAnonymous()) {
     if (req.xhr) {
-      return res.status(401).json({ errorMsg: "Du har blivit utloggad" });
+      return res.status(401).json({ errorMsg: i18n.get('signedOut') });
     }
   } else {
     roleUtil.getRoleByName("sv:role");
@@ -40,19 +41,19 @@ router.get('/', (req, res) => {
   };
 
   let storedFeedback = requestHelper.getData(options);
-
-  storedFeedback.forEach(feedbackItem => {
-    if (feedbackItem.feedbackPage === propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName")) {
-      feedback.push({
-        name: feedbackItem.user,
-        message: feedbackItem.message,
-        date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
-        page: feedbackItem.feedbackPage,
-        isOutdated: feedbackItem.isOutdated
-      })
-    }
-  });
-
+  if (storedFeedback) {
+    storedFeedback.forEach(feedbackItem => {
+      if (feedbackItem.feedbackPage === propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName")) {
+        feedback.push({
+          name: feedbackItem.user,
+          message: feedbackItem.message,
+          date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
+          page: feedbackItem.feedbackPage,
+          isOutdated: feedbackItem.isOutdated
+        })
+      }
+    });
+  }
   res.agnosticRender(renderToString(<App isInEditor={isInEditor} isAdmin={isAdmin} feedback={feedback} />), {
     isInEditor,
     isAdmin,
@@ -62,9 +63,8 @@ router.get('/', (req, res) => {
 
 router.post('/addFeedback', (req, res) => {
 
-  logUtil.info(JSON.stringify(req));
   let options = {
-    url: '/addFeedback' ,
+    url: '/addFeedback',
     value: {
       "message": req.params.feedback,
       "feedbackPage": propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName"),
@@ -76,19 +76,9 @@ router.post('/addFeedback', (req, res) => {
 
   let addedFeedback = requestHelper.addData(options);
 
-  logUtil.info("testing tstin: " + addedFeedback);
-  /** 
-    try {
-      const result2 = dataStore.add(feedback);
-      logUtil.info(JSON.stringify(result2));
-  
-    } catch (e) {
-      logUtil.info(e.message);
-    }
-  */
   if (addedFeedback) {
     res.json({
-      message: "Du har nu lämnat feedback, tack för din slösade tid. :)"
+      message: i18n.get('feedbackToast')
     });
   }
 });

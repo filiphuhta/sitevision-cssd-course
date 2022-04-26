@@ -1,5 +1,11 @@
 {
-  "hello": "Hej",
   "settings": "Inställningar",
-  "name": "Namn"
+  "feedbackToast": "Du har nu lämnat feedback, tack för lämnad feedback",
+  "signedOut": "Du har blivit utloggad",
+  "editorMode": "Du är i redigeringsläge du kan enbart lämna feedback i visningsläget.",
+  "recivedFeedback": "Feedback lämnad om sidan",
+  "outDatedFeedback": "Denna feedback är utdaterad",
+  "sendFeedbackHeading": "Lämna feedback om sidan",
+  "sendFeedbackPlaceHolder": "Hej jag skulle bara vilja tycka till om..",
+  "sendFeedbackButton": "Skicka feedback"
 }
