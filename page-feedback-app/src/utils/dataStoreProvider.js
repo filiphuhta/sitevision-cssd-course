@@ -13,6 +13,6 @@ export const addData = (data) => {
     return result;
 }
 
-export const getPrevSearches = () => {
-    return feedbackStore.find('*').toArray();
+export const getPagesById = (feedbackPageId) => {
+    return feedbackStore.find(`ds.analyzed.feedbackPageId:${feedbackPageId}*`).toArray();
 }

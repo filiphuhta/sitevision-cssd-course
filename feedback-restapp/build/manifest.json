@@ -4,7 +4,7 @@
   "name": "Feedback restapp",
   "author": "Filip AB",
   "description": "A feedback restapp",
-  "helpUrl": "https://developer.sitevision.se/restapps",
+  "helpUrl": "",
   "type": "RESTApp",
   "bundled": true,
   "storage": {

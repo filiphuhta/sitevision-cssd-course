@@ -16,7 +16,7 @@ import mailBuilder from '@sitevision/api/server/MailBuilder';
 
 import {
   addData,
-  getPrevSearches
+  getPagesById
 } from './utils/dataStoreProvider';
 
 const currentUser = portletContextUtil.getCurrentUser();
@@ -40,10 +40,9 @@ router.get('/', (req, res) => {
   let isAdmin = userHasPermission ? true : false;
   let feedback = [];
 
-  let storedFeedback = getPrevSearches();
+  let storedFeedback = getPagesById(portletContextUtil.getCurrentPage().getIdentifier());
   if (storedFeedback) {
     storedFeedback.forEach(feedbackItem => {
-      if (feedbackItem.feedbackPage === propertyUtil.getString(portletContextUtil.getCurrentPage(), "displayName")) {
         feedback.push({
           name: feedbackItem.user,
           message: feedbackItem.message,
@@ -51,7 +50,7 @@ router.get('/', (req, res) => {
           page: feedbackItem.feedbackPage,
           isOutdated: feedbackItem.isOutdated
         })
-      }
+    
     });
   }
   res.agnosticRender(renderToString(<App isInEditor={isInEditor} isAdmin={isAdmin} feedback={feedback} />), {

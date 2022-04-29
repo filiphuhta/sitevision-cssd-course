@@ -2,8 +2,8 @@ import storage from '@sitevision/api/server/storage';
 import logUtil from '@sitevision/api/server/LogUtil';
 const feedbackStore = storage.getCollectionDataStore("feedbackStore");
 
-export const getPrevSearches = () => {
-    return feedbackStore.find('*').toArray();
+export const getPagesById = (feedbackPageId) => {
+    return feedbackStore.find(`ds.analyzed.feedbackPageId:${feedbackPageId}*`).toArray();
 }
 
 export const update = (dsid, data) => {

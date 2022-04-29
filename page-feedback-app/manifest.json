@@ -4,7 +4,7 @@
   "name": "Page feedback app",
   "author": "Filip AB",
   "description": "A Page feedback app",
-  "helpUrl": "https://developer.sitevision.se/webapps",
+  "helpUrl": "",
   "type": "WebApp",
   "bundled": true,
   "requiredLibs": {
