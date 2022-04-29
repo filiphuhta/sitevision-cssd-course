@@ -6,23 +6,33 @@ import versionUtil from '@sitevision/api/server/VersionUtil';
 import systemUserUtil from '@sitevision/api/server/SystemUserUtil';
 import portletContextUtil from '@sitevision/api/server/PortletContextUtil';
 import roleUtil from '@sitevision/api/server/RoleUtil';
-import permissionUtil from '@sitevision/api/server/PermissionUtil';
-import perm from '@sitevision/api/server/PermissionUtil.Permission.DEVELOPER';
 import propertyUtil from '@sitevision/api/server/PropertyUtil';
 import dateUtil from '@sitevision/api/server/DateUtil';
 import i18n from '@sitevision/api/common/i18n';
 import appData from '@sitevision/api/server/appData';
 import mailBuilder from '@sitevision/api/server/MailBuilder';
 import Mail from './components/Mail/Mail';
+import logUtil from '@sitevision/api/server/LogUtil';
 
 import {
   addData,
   getPagesById
 } from './utils/dataStoreProvider';
 
+
+
+
 const currentUser = portletContextUtil.getCurrentUser();
 const currentPage = portletContextUtil.getCurrentPage();
-const userHasPermission = permissionUtil.hasPermission(currentPage, currentUser, perm);
+
+const adminRole = roleUtil.getRoleByName("Administratör");
+let roleBuilder = roleUtil.getRoleMatcherBuilder();
+roleBuilder.addRole(adminRole);
+roleBuilder.setUser(currentUser);
+let adminRoleMatcher = roleBuilder.build();
+let userHasAdminPermission = adminRoleMatcher.matchesAll(currentPage);
+
+logUtil.info(userHasAdminPermission);
 
 router.use((req, res, next) => {
   if (systemUserUtil.isAnonymous()) {
@@ -38,7 +48,7 @@ router.use((req, res, next) => {
 
 router.get('/', (req, res) => {
   let isInEditor = versionUtil.getCurrentVersion() != versionUtil.ONLINE_VERSION ? true : false;
-  let isAdmin = userHasPermission ? true : false;
+  let isAdmin = userHasAdminPermission ? true : false;
   let feedback = [];
 
   let storedFeedback = getPagesById(portletContextUtil.getCurrentPage().getIdentifier());
