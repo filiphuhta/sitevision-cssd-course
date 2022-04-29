@@ -32,8 +32,6 @@ roleBuilder.setUser(currentUser);
 let adminRoleMatcher = roleBuilder.build();
 let userHasAdminPermission = adminRoleMatcher.matchesAll(currentPage);
 
-logUtil.info(userHasAdminPermission);
-
 router.use((req, res, next) => {
   if (systemUserUtil.isAnonymous()) {
     if (req.xhr) {
