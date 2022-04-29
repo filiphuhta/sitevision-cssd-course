@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import router from '@sitevision/api/common/router';
 import App from './components/App';
 import versionUtil from '@sitevision/api/server/VersionUtil';
@@ -13,6 +13,7 @@ import dateUtil from '@sitevision/api/server/DateUtil';
 import i18n from '@sitevision/api/common/i18n';
 import appData from '@sitevision/api/server/appData';
 import mailBuilder from '@sitevision/api/server/MailBuilder';
+import Mail from './components/Mail/Mail';
 
 import {
   addData,
@@ -43,14 +44,14 @@ router.get('/', (req, res) => {
   let storedFeedback = getPagesById(portletContextUtil.getCurrentPage().getIdentifier());
   if (storedFeedback) {
     storedFeedback.forEach(feedbackItem => {
-        feedback.push({
-          name: feedbackItem.user,
-          message: feedbackItem.message,
-          date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
-          page: feedbackItem.feedbackPage,
-          isOutdated: feedbackItem.isOutdated
-        })
-    
+      feedback.push({
+        name: feedbackItem.user,
+        message: feedbackItem.message,
+        date: dateUtil.getDateAsString("yyyy-MM-dd HH:mm", new Date(feedbackItem.dstimestamp)),
+        page: feedbackItem.feedbackPage,
+        isOutdated: feedbackItem.isOutdated
+      })
+
     });
   }
   res.agnosticRender(renderToString(<App isInEditor={isInEditor} isAdmin={isAdmin} feedback={feedback} />), {
@@ -81,22 +82,10 @@ router.post('/addFeedback', (req, res) => {
   }
 });
 
-
-let feedbackHTMLMessage = (feedbackObject) => {
-  return '<div style=" background-color: #80c5ff; height:100%; margin: 10px; border-radius: 5px; padding: 20px;">' +
-    '<h2 style="text-align: center; font-size:30px; color: white;">' + i18n.get('emailMessageFrom') + ' </h2>' +
-    '<div style="color: white; text-align: center; font-size:14px; height: 200px; background-color:#004a90; padding: 20px; border: 1px solid white;">' +
-    '<p style="color: white;">' + i18n.get('emailHeading', feedbackObject.feedbackPage) + '</p>' +
-    '<p style="color: white;">' + i18n.get('emailMessage', feedbackObject.message) + '</p> ' +
-    '<a style="color: white;" href="' + feedbackObject.feedbackPageURL + '" >' + i18n.get('emailLink') + '</p> </a>' +
-    '</div>' +
-    '</div>';
-};
-
 let sendMail = (feedback) => {
   if (feedback) {
     const mail = mailBuilder.setSubject(i18n.get('emailSubject', feedback.feedbackPage))
-      .setHtmlMessage(feedbackHTMLMessage(feedback))
+      .setHtmlMessage(renderToStaticMarkup(<Mail feedback={feedback} />))
       .addRecipient(appData.get('email'))
       .build();
     mail.send();
